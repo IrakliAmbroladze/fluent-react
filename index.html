@@ -6,13 +6,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
   </head>
-  <body>
-    <ul id="list-parent"></ul>
-    <form id="add-item-form" action="/api/add-item" method="POST">
-      <input type="text" id="new-list-item-label" />
-      <button type="submit">Add Item</button>
-    </form>
-    <script src="./index.js"></script>
+  <body ng-app="">
+    <p>Name: <input type="text" ng-model="name" /></p>
+    <p ng-if="name">Hello, {{name}}!</p>
   </body>
 </html>
