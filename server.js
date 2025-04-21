@@ -41,6 +41,18 @@ export const server = createServer((req, res) => {
         res.end("Invalid JSON");
       }
     });
+  } else if (req.method === "POST" && req.url === "/api/add-item") {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk;
+    });
+    req.on("end", () => {
+      const params = new URLSearchParams(body);
+      const item = params.get("new-list-item-label");
+      console.log("Received item:", item);
+      res.writeHead(200, { "content-type": "application/json" });
+      res.end(JSON.stringify({ input: item }));
+    });
   } else {
     res.writeHead(404);
     res.end("Not Found");
