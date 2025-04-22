@@ -1,25 +1,20 @@
-const likeButton = document.getElementById("likeButton");
-likeButton.addEventListener("click", () => {
-  const liked = likeButton.getAttribute("data-liked") === "true";
-  const isPending = likeButton.getAttribute("data-pending") === "true";
+(function myApp() {
+  var listItems = ["I love", "React", "and", "TypeScript"];
+  var parentList = document.getElementById("list-parent");
+  var addForm = document.getElementById("add-item-form");
+  var newListItemLabel = document.getElementById("new-list-item-label");
 
-  likeButton.setAttribute("data-pending", "true");
-  likeButton.setAttribute("disabled", "true");
-
-  fetch("/like", {
-    method: "POST",
-    body: JSON.stringify({ liked: !liked }),
-  })
-    .then(() => {
-      likeButton.setAttribute("data-liked", !liked);
-      likeButton.textContent = liked ? "Like" : "Liked";
-      likeButton.removeAttribute("disabled");
-    })
-    .catch(() => {
-      likeButton.setAttribute("data-failed", "true");
-      likeButton.textContent = "Failed";
-    })
-    .finally(() => {
-      likeButton.setAttribute("data-pending", "false");
-    });
-});
+  addForm.onsubmit = function (event) {
+    event.preventDefault();
+    listItems.push(newListItemLabel.value);
+    renderListItems();
+  };
+  function renderListItems() {
+    for (i = 0; i < listItems.length; i++) {
+      var el = document.createElement("li");
+      el.textContent = listItems[i];
+      parentList.appendChild(el);
+    }
+  }
+  renderListItems();
+})();
